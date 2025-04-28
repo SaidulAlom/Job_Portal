@@ -1,137 +1,159 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-function Hero() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [location, setLocation] = useState('All Locations');
+function Home() {
   const [isVisible, setIsVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Trigger entrance animations on mount
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
+  // Placeholder recent posts data (inspired by JobAssam.in)
+  const recentPosts = [
+    {
+      id: 1,
+      title: 'SSC CGL 2024 Recruitment',
+      category: 'Jobs',
+      date: 'April 25, 2025',
+      description: 'Apply for 17,727 posts under SSC Combined Graduate Level Exam 2024.',
+      link: '/jobs',
+    },
+    {
+      id: 2,
+      title: 'Assam Police Constable Result 2025',
+      category: 'Results',
+      date: 'April 20, 2025',
+      description: 'Check results for Assam Police Constable PET/PST and Written Test.',
+      link: '/results',
+    },
+    {
+      id: 3,
+      title: 'UPSC CSE 2025 Admit Card',
+      category: 'Admit Cards',
+      date: 'April 18, 2025',
+      description: 'Download admit cards for UPSC Civil Services Preliminary Exam 2025.',
+      link: '/admit-cards',
+    },
+    {
+      id: 4,
+      title: 'PM Scholarship Scheme 2025',
+      category: 'Scholarships',
+      date: 'April 15, 2025',
+      description: 'Apply for the Prime Minister’s Scholarship Scheme for 2025.',
+      link: '/scholarships',
+    },
+    {
+      id: 5,
+      title: 'Assam Direct Recruitment Grade III & IV',
+      category: 'Jobs',
+      date: 'April 10, 2025',
+      description: 'Results announced for 12,673 vacancies under Assam Direct Recruitment.',
+      link: '/jobs',
+    },
+    {
+      id: 6,
+      title: 'MGNREGA Scheme Update',
+      category: 'Schemes',
+      date: 'April 5, 2025',
+      description: 'Latest updates on MGNREGA employment scheme for rural workers.',
+      link: '/schemes',
+    },
+  ];
+
+  // Filter posts based on search term
+  const filteredPosts = recentPosts.filter(
+    (post) =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <section className="relative bg-[#EEEEEE] overflow-hidden">
+    <section className="relative bg-[#EEEEEE] py-16">
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')`,
         }}
       ></div>
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#201E43]/50"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#EEEEEE]/80 to-transparent"></div>
 
-      {/* Container */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-        <div className="text-center">
-          {/* Headline */}
-          <h1
-            className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#201E43] mb-6 ${
-              isVisible ? 'animate-slide-up' : 'opacity-0'
-            }`}
-          >
-            <span className="bg-gradient-to-r from-[#134B70] to-[#508C9B] bg-clip-text text-transparent">
-              Discover Your Dream Job
-            </span>
-            <br className="hidden md:block" />
-            <span className="text-[#134B70]">with JobPortal</span>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Section */}
+        <div
+          className={`text-center space-y-6 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
+          style={{ animationDelay: '0s' }}
+        >
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#201E43]">
+            Welcome to JobPortal
           </h1>
+          <p className="text-lg sm:text-xl text-[#134B70] max-w-3xl mx-auto leading-relaxed">
+            Your trusted source for the latest Assam government job alerts, admit cards, exam results, scholarships, and government schemes. Stay updated with timely career and education news![](https://jobassam.in/)
+          </p>
+          <div className="max-w-md mx-auto">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search jobs, results, admit cards..."
+              className="w-full px-4 py-3 rounded-md text-[#201E43] bg-[#EEEEEE] border border-[#134B70]/20 focus:outline-none focus:ring-2 focus:ring-[#508C9B] text-base"
+              aria-label="Search job and education updates"
+            />
+          </div>
+          <NavLink
+            to="/jobs"
+            className="inline-block bg-[#201E43] text-[#EEEEEE] px-6 py-3 rounded-md text-base font-semibold hover:bg-[#508C9B] transition-all duration-300 transform hover:scale-105"
+            aria-label="Explore latest job opportunities"
+          >
+            Explore Jobs
+          </NavLink>
+        </div>
 
-          {/* Subheading */}
-          <p
-            className={`mt-6 text-lg sm:text-xl lg:text-2xl text-[#508C9B] max-w-3xl mx-auto ${
-              isVisible ? 'animate-slide-up' : 'opacity-0'
+        {/* Recent Posts Section */}
+        <div className="mt-12">
+          <h2
+            className={`text-3xl font-semibold text-[#201E43] mb-8 text-center ${
+              isVisible ? 'animate-fade-in' : 'opacity-0'
             }`}
             style={{ animationDelay: '0.2s' }}
           >
-            Connect with top employers and explore thousands of opportunities worldwide.
-          </p>
-
-          {/* Search Bar */}
-          <div
-            className={`mt-12 max-w-4xl mx-auto ${
-              isVisible ? 'animate-slide-up' : 'opacity-0'
-            }`}
-            style={{ animationDelay: '0.4s' }}
-          >
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 bg-[#EEEEEE] rounded-lg shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
-                <div className="flex flex-col sm:flex-row">
-                  <div className="flex-1 relative">
-                    <svg
-                      className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#508C9B]"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <input
-                      type="text"
-                      placeholder="Job title, keywords, or company"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 text-lg border-none focus:ring-2 focus:ring-[#508C9B] focus:outline-none bg-[#EEEEEE] text-[#201E43] transition-all duration-300 hover:bg-[#508C9B]/10"
-                    />
-                  </div>
-                  <div className="border-t sm:border-t-0 sm:border-l border-[#508C9B]/50">
-                    <select
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      className="w-full sm:w-auto h-full px-4 py-4 text-[#201E43] bg-[#EEEEEE] border-none focus:ring-2 focus:ring-[#508C9B] focus:outline-none text-lg transition-all duration-300 hover:bg-[#508C9B]/10"
-                    >
-                      <option>All Locations</option>
-                      <option>Remote</option>
-                      <option>United States</option>
-                      <option>Europe</option>
-                      <option>Asia</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <button
-                className="bg-[#201E43] hover:bg-[#508C9B] text-[#EEEEEE] px-8 py-4 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
-                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-              >
-                Search Jobs
-              </button>
-            </div>
-          </div>
-
-          {/* Trust Indicators */}
-          <div
-            className={`mt-16 flex flex-col items-center ${
-              isVisible ? 'animate-fade-in' : 'opacity-0'
-            }`}
-            style={{ animationDelay: '0.6s' }}
-          >
-            <p className="text-[#508C9B] text-sm uppercase tracking-wider mb-6">
-              Trusted by Leading Companies
-            </p>
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-12 opacity-80 hover:opacity-100 transition-opacity duration-300">
-              {[
-                { src: 'https://logo.clearbit.com/google.com?size=80', alt: 'Google' },
-                { src: 'https://logo.clearbit.com/microsoft.com?size=80', alt: 'Microsoft' },
-                { src: 'https://logo.clearbit.com/amazon.com?size=80', alt: 'Amazon' },
-                { src: 'https://logo.clearbit.com/apple.com?size=80', alt: 'Apple' },
-                { src: 'https://logo.clearbit.com/netflix.com?size=80', alt: 'Netflix' },
-              ].map((logo, index) => (
-                <img
-                  key={logo.alt}
-                  src={logo.src}
-                  alt={logo.alt}
-                  className={`h-8 object-contain transition-transform duration-300 transform hover:scale-110 ${
-                    isVisible ? 'animate-fade-in' : 'opacity-0'
+            Latest Updates
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPosts.length > 0 ? (
+              filteredPosts.map((post, index) => (
+                <NavLink
+                  key={post.id}
+                  to={post.link}
+                  className={`bg-[#EEEEEE] rounded-lg shadow-lg p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${
+                    isVisible ? 'animate-slide-up' : 'opacity-0'
                   }`}
-                  style={{ animationDelay: `${0.8 + index * 0.1}s` }}
-                />
-              ))}
-            </div>
+                  style={{ animationDelay: `${0.4 + index * 0.1}s` }}
+                  aria-label={`View details for ${post.title}`}
+                >
+                  <h3 className="text-xl font-semibold text-[#201E43] mb-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-sm text-[#508C9B] mb-2">
+                    {post.category} • {post.date}
+                  </p>
+                  <p className="text-base text-[#134B70] mb-4">
+                    {post.description}
+                  </p>
+                  <span className="inline-block text-[#508C9B] font-semibold hover:underline">
+                    Read More
+                  </span>
+                </NavLink>
+              ))
+            ) : (
+              <p className="text-lg text-[#134B70] text-center col-span-full">
+                No updates found for "{searchTerm}".
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -139,4 +161,4 @@ function Hero() {
   );
 }
 
-export default Hero;
+export default Home;
